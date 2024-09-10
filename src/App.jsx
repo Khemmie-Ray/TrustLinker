@@ -6,13 +6,18 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import { configWeb3Modal } from "./connection";
+import Dashboard from "./pages/Dashboard";
+import DashboardLayout from "./layout/DashboardLayout";
 
 configWeb3Modal();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="/" element={<Home />} />
+      <Route index element={<Home />} />
+      <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route index element={<Dashboard/>} />
+      </Route>
         
     </Route>
   )
