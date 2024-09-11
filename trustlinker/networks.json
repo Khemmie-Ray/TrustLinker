@@ -1,0 +1,8 @@
+{
+  "optimism-sepolia": {
+    "TrustLinker": {
+      "address": "0x53700f45Eb399e9E2640CC06899DdB41CDB94A89",
+      "startBlock": 17114538
+    }
+  }
+}

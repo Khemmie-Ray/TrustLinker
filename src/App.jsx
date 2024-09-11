@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import { configWeb3Modal } from "./connection";
 import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./layout/DashboardLayout";
+import CreateAgreement from "./pages/CreateAgreement";
 
 configWeb3Modal();
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/dashboard" element={<DashboardLayout />}>
       <Route index element={<Dashboard/>} />
+      <Route path="create-event" element={<CreateAgreement/>}/>
       </Route>
         
     </Route>
