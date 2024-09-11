@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Tabs, Tab } from "@mui/material";
+import { Box, Tabs, Tab, CircularProgress } from "@mui/material";
 import PropTypes from 'prop-types';
 import { FaCircleCheck } from "react-icons/fa6";
 import {ApolloClient, InMemoryCache, gql} from "@apollo/client";
@@ -7,24 +7,22 @@ import { useWeb3ModalAccount, useWeb3ModalProvider } from "@web3modal/ethers/rea
 import { ethers } from "ethers";
 import { getContract } from "../constants/contract";
 import { toast } from "react-toastify";
+import AgreementDetails from "../components/AgreementDetails";
 
 const Dashboard = () => {
   const [value, setValue] = useState(0);
+  const [detailModal, setDetailModal] = useState(false)
   
-
   const [data, setData] = useState()
-  const [agreements, setAgreements] = useState()
-
 
   const {address} = useWeb3ModalAccount()
-  console.log(address)
 
   const { walletProvider } = useWeb3ModalProvider();
 
   const [isPending, setIsPending] = useState(false)
 
   // subgraph implementaion
-  const queryUrl = "https://api.studio.thegraph.com/query/57950/trustlinker/version/latest";
+  const queryUrl = import.meta.env.VITE_GRAPHQL;
 
   const client = new ApolloClient({
     uri: queryUrl,
@@ -54,7 +52,6 @@ const Dashboard = () => {
         const {data} = await client.query({query: getData});
 
         setData(data)
-        console.log(data)
 
       } catch (error) {
         console.log("unable to fetch data",error)
@@ -67,13 +64,9 @@ const Dashboard = () => {
 
   }, [client, getData]);
 
-  // const breakdata = data?.agreementCreateds.map((item )=> {
-  //   return item;
-  // })
-
-  // console.log(breakdata)
-
   // ----------------------------------------
+
+  console.log(data)
 
   // sign contract function
 
@@ -82,7 +75,8 @@ const Dashboard = () => {
 
     e.preventDefault()
 
-    let id = 1;
+    setIsPending(true)
+
     const provider = new ethers.BrowserProvider(walletProvider);
 
     const signer = await provider.getSigner();
@@ -91,7 +85,7 @@ const Dashboard = () => {
 
     try {
 
-        const transaction = await contract.signAgreementPartyB(id)
+        const transaction = await contract.signAgreementPartyB(6)
 
         console.log("transaction: ", transaction);
         const receipt = await transaction.wait();
@@ -99,11 +93,12 @@ const Dashboard = () => {
         // console.log("receipt: ", receipt);
 
         if (receipt.status) {
+            setIsPending(false)
             return toast.success('successful')
         }
 
-        toast.error(receipt)        
     } catch (error) {
+        setIsPending(false)
         toast.error(error)
     }
 }
@@ -152,19 +147,19 @@ const Dashboard = () => {
         <div className="bg-white rounded-2xl w-[100%] flex-col lg:flex-row md:flex-row  flex justify-between">
           <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 lg:border-b-0 md:border-b-0  border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
-              {data && data.agreementCreateds.length}
+              {data ? data.agreementCreateds.length :  <CircularProgress className='animate-spin m-auto'/>}
             </h2>
             <p>Onchain Contracts</p>
           </div>
           <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 border-[#222BAE] lg:border-b-0 md:border-b-0 w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
-              20
+            {data ? data.agreementCreateds.length - data.partyBSigneds.length :  <CircularProgress className='animate-spin m-auto'/>}
             </h2>
             <p>Unsigned Contracts</p>
           </div>
           <div className="p-6 flex flex-col items-center justify-center w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
-              {data && data.partyBSigneds.length}
+              {data ? data.partyBSigneds.length :  <CircularProgress className='animate-spin m-auto'/>}
             </h2>
             <p>Signed Contracts</p>
           </div>
@@ -218,10 +213,12 @@ const Dashboard = () => {
         </Box>
         <CustomTabPanel value={value} index={0}>
         <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
-          {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.map((item) => ( 
-              <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 flex flex-col">
-                  <div className="ml-auto"><FaCircleCheck className="text-[#222BAE] text-4xl"/></div>
+          {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.filter(item => item.partyA.toLowerCase() == address.toLowerCase()).map((item, index) => ( 
+              <div key={index} className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 flex flex-col">
+                  <div className="flex justify-between"><span className="text-bold text-[20px] text-blue-500">#{index + 1}</span><FaCircleCheck className="text-[#222BAE] text-4xl"/></div>
                   <p>{item._agreement.slice(0, 200)}</p>
+                  <button className="text-blue-400 underline" onClick={() => {setDetailModal(true)}}>Read</button>
+                  {/* {detailModal && <AgreementDetails data={data.agreementCreateds[index]}/>} */}
               </div>
           )) : <h4>You haven't created an agreement yet !</h4>}
           </section>
@@ -229,10 +226,11 @@ const Dashboard = () => {
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>          
             <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
-        {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.map((item, index) => (
+        {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.filter(item => item.partyB.toLowerCase() == address.toLowerCase()).map((item, index) => (
             <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative flex flex-wrap"  key={index}>
+                <span className="text-bold text-[20px] text-blue-500">#{index + 1}</span>
                 <p>{item._agreement.slice(0, 200)}</p>
-                <button onClick={signAgreement} type="button" className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract</button>
+                {<button onClick={signAgreement} type="button" className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract {isPending && <CircularProgress className='animate-spin m-auto'/>}</button>}
             </div>
          
         )) : <h4>No one has sent you an agreement yet!</h4>}
@@ -241,11 +239,12 @@ const Dashboard = () => {
 
         <CustomTabPanel value={value} index={2}>
              <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
-        {data && data.partyBSigneds.length > 0 ? data.agreementCreateds.map(() => (
+            {data && data.partyBSigneds.length > 0 ? data.agreementCreateds.map((item, index) => (
              <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
-                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil expedita sunt sequi tenetur temporibus inventore consectetur distinctio, hic aut labore!</p>
+                <span className="text-bold text-[20px] text-blue-500">#{index + 1}</span>
+                 <p>{item._agreement.slice(0, 200)}</p>
              </div>
-          )) : <h4>No one has sent you an agreement yet!</h4>}
+            )) : <h4>No one has sent you an agreement yet!</h4>}
              </section>
         </CustomTabPanel>
       </Box>
