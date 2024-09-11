@@ -1,10 +1,109 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import PropTypes from 'prop-types';
 import { FaCircleCheck } from "react-icons/fa6";
+import {ApolloClient, InMemoryCache, gql} from "@apollo/client";
+import { useWeb3ModalAccount, useWeb3ModalProvider } from "@web3modal/ethers/react";
+import { ethers } from "ethers";
+import { getContract } from "../constants/contract";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const [value, setValue] = useState(0);
+  
+
+  const [data, setData] = useState()
+  const [agreements, setAgreements] = useState()
+
+
+  const {address} = useWeb3ModalAccount()
+  console.log(address)
+
+  const { walletProvider } = useWeb3ModalProvider();
+
+  const [isPending, setIsPending] = useState(false)
+
+  // subgraph implementaion
+  const queryUrl = "https://api.studio.thegraph.com/query/57950/trustlinker/version/latest";
+
+  const client = new ApolloClient({
+    uri: queryUrl,
+    cache: new InMemoryCache()
+  });
+
+  const getData = gql`
+  query{
+    agreementCreateds {
+    id
+    _agreement
+    partyA
+    partyB
+  }
+  partyBSigneds {
+    id
+    _agreement
+    partyA
+    partyB
+  }
+  }
+  `;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const {data} = await client.query({query: getData});
+
+        setData(data)
+        console.log(data)
+
+      } catch (error) {
+        console.log("unable to fetch data",error)
+      }
+    } 
+
+    fetchData();
+
+    return() => {}
+
+  }, [client, getData]);
+
+  // ----------------------------------------
+
+  // sign contract function
+
+   // interactiong with contract
+   const signAgreement = async (e) => {
+
+    e.preventDefault()
+
+    let id = 1;
+    const provider = new ethers.BrowserProvider(walletProvider);
+
+    const signer = await provider.getSigner();
+
+    const contract = await getContract(signer)
+
+    try {
+
+        const transaction = await contract.signAgreementPartyB(id)
+
+        console.log("transaction: ", transaction);
+        const receipt = await transaction.wait();
+
+        // console.log("receipt: ", receipt);
+
+        if (receipt.status) {
+            return toast.success('successful')
+        }
+
+        toast.error(receipt)        
+    } catch (error) {
+        toast.error(error)
+    }
+}
+
+
+  // ----------------------------------
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -47,7 +146,7 @@ const Dashboard = () => {
         <div className="bg-white rounded-2xl w-[100%] flex-col lg:flex-row md:flex-row  flex justify-between">
           <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
-              20
+              {data && data.agreementCreateds.length}
             </h2>
             <p>Onchain Contracts</p>
           </div>
@@ -59,9 +158,9 @@ const Dashboard = () => {
           </div>
           <div className="p-6 flex flex-col items-center justify-center w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
-              20
+              {data && data.partyBSigneds.length}
             </h2>
-            <p>Created Contracts</p>
+            <p>Signed Contracts</p>
           </div>
         </div>
       </section>
@@ -99,23 +198,52 @@ const Dashboard = () => {
                 },
               }}
             />
+             <Tab
+              label="signed"
+              {...a11yProps(2)}
+              sx={{
+                "&.Mui-selected": {
+                  color: "white",
+                  backgroundColor: "#222BAE",
+                },
+              }}
+            />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
-          <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil expedita sunt sequi tenetur temporibus inventore consectetur distinctio, hic aut labore!</p>
-              <div className="absolute top-5 right-5"><FaCircleCheck className="text-[#222BAE] text-4xl"/></div>
-          </div>
+          {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.map((item) => ( 
+            <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
+              <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
+                  <p>{item._agreement.slice(0, 200)}</p>
+                  <div className="absolute top-5 right-5"><FaCircleCheck className="text-[#222BAE] text-4xl"/></div>
+              </div>
           </section>
+          )) : <h4>You haven't created an agreement yet !</h4>}
+
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-        <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
-          <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil expedita sunt sequi tenetur temporibus inventore consectetur distinctio, hic aut labore!</p>
-              <button className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract</button>
-          </div>
-          </section>
+        {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.map((item, index) => (
+          
+            <section key={index} className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
+            <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative flex flex-wrap">
+                <p>{item._agreement.slice(0, 200)}</p>
+                <button onClick={signAgreement} type="button" className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract</button>
+            </div>
+            </section>
+         
+        )) : <h4>No one has sent you an agreement yet!</h4>}
+       
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={2}>
+             <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
+        {data && data.partyBSigneds.length > 0 ? data.agreementCreateds.map(() => (
+             <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
+                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil expedita sunt sequi tenetur temporibus inventore consectetur distinctio, hic aut labore!</p>
+                 {/* <button className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract</button> */}
+             </div>
+          )) : <h4>No one has sent you an agreement yet!</h4>}
+             </section>
         </CustomTabPanel>
       </Box>
     </main>
