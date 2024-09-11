@@ -67,6 +67,12 @@ const Dashboard = () => {
 
   }, [client, getData]);
 
+  // const breakdata = data?.agreementCreateds.map((item )=> {
+  //   return item;
+  // })
+
+  // console.log(breakdata)
+
   // ----------------------------------------
 
   // sign contract function
@@ -144,13 +150,13 @@ const Dashboard = () => {
       </h2>
       <section className="mb-16">
         <div className="bg-white rounded-2xl w-[100%] flex-col lg:flex-row md:flex-row  flex justify-between">
-          <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
+          <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 lg:border-b-0 md:border-b-0  border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
               {data && data.agreementCreateds.length}
             </h2>
             <p>Onchain Contracts</p>
           </div>
-          <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
+          <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 border-[#222BAE] lg:border-b-0 md:border-b-0 w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
               20
             </h2>
@@ -211,28 +217,26 @@ const Dashboard = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
+        <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
           {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.map((item) => ( 
-            <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
-              <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
+              <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 flex flex-col">
+                  <div className="ml-auto"><FaCircleCheck className="text-[#222BAE] text-4xl"/></div>
                   <p>{item._agreement.slice(0, 200)}</p>
-                  <div className="absolute top-5 right-5"><FaCircleCheck className="text-[#222BAE] text-4xl"/></div>
               </div>
-          </section>
           )) : <h4>You haven't created an agreement yet !</h4>}
+          </section>
 
         </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
+        <CustomTabPanel value={value} index={1}>          
+            <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
         {data && data.agreementCreateds.length > 0 ? data.agreementCreateds.map((item, index) => (
-          
-            <section key={index} className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
-            <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative flex flex-wrap">
+            <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative flex flex-wrap"  key={index}>
                 <p>{item._agreement.slice(0, 200)}</p>
                 <button onClick={signAgreement} type="button" className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract</button>
             </div>
-            </section>
          
         )) : <h4>No one has sent you an agreement yet!</h4>}
-       
+            </section>
         </CustomTabPanel>
 
         <CustomTabPanel value={value} index={2}>
@@ -240,7 +244,6 @@ const Dashboard = () => {
         {data && data.partyBSigneds.length > 0 ? data.agreementCreateds.map(() => (
              <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil expedita sunt sequi tenetur temporibus inventore consectetur distinctio, hic aut labore!</p>
-                 {/* <button className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract</button> */}
              </div>
           )) : <h4>No one has sent you an agreement yet!</h4>}
              </section>
