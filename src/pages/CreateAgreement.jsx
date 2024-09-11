@@ -74,7 +74,7 @@ function CreateAgreement() {
 
     setIsPending(true)
 
-    const PROMPT = `write a ${formData.type} agreement between ${formData.partyAname} and ${formData.partyBname} to elapse on ${formData.duration}, with a title of ${formData.title}`
+    const PROMPT = `write a ${formData.type} agreement between ${formData.partyAname} and ${formData.partyBname} to elapse on ${formData.duration}, with a title of ${formData.title}, construct this exactly how it will look on a document`
 
     const fee = await web3.ora.estimateFee(Models.LLAMA2)
 
@@ -96,7 +96,7 @@ function CreateAgreement() {
 
     setIsPending(true)
 
-    const  PROMPT = `write a ${formData.type} agreement between ${formData.partyAname} and ${formData.partyBname} to elapse on ${formData.duration}, with a title of ${formData.title}`
+    const  PROMPT = `write a ${formData.type} agreement between ${formData.partyAname} and ${formData.partyBname} to elapse on ${formData.duration}, with a title of ${formData.title}, construct this exactly how it will look on a document`
 
     const result = await web3.ora.getAIResult(Models.LLAMA2, PROMPT);
 
