@@ -16,16 +16,16 @@ const style = {
     p: 4,
   };
 
-const CreateContract = () => {
-    const [open, setOpen] = useState(false);
+const CreateContract = ({data, sign}) => {
+    const [open, setOpen] = useState(true);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
    
 
   return (
-    <div>
+    <div className='p-5 text-white'>
         <div>
-        <button className="text-white bg-[#222BAE] p-4 rounded-lg lg:text-[18px] md:text-[18px] font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold" onClick={handleOpen}>Create Contract</button>
+        {/* <button className="text-white bg-[#222BAE] p-4 rounded-lg lg:text-[18px] md:text-[18px] font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold" onClick={handleOpen}>Create Contract</button> */}
     <Modal
         open={open}
         onClose={handleClose}
@@ -33,10 +33,8 @@ const CreateContract = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <input type="text" placeholder="" className="rounded-lg w-[100%] text-white p-4 bg-[#ffffff23] border border-white/50 backdrop-blur-lg mb-4 outline-none" />
-          <input type="text" placeholder='' className="rounded-lg w-[100%] border text-white border-white/50 p-4 bg-[#ffffff23] backdrop-blur-lg mb-4 outline-none" />
-          <input type="email" placeholder='' className="text-white rounded-lg w-[100%] p-4 bg-[#ffffff23] border border-white/50 backdrop-blur-lg mb-4 outline-none" />
-          <button className="bg-[#222BAE] text-[white] py-2 px-4 rounded-lg lg:text-[18px] md:text-[18px] font-bold text-[16px] w-[100%] my-4">Create &rarr;</button>
+          <h4>{data}</h4>
+          <button onClick={sign} className="bg-[#222BAE] text-[white] py-2 px-4 rounded-lg lg:text-[18px] md:text-[18px] font-bold text-[16px] w-[100%] my-4">Party A sign &rarr;</button>
         </Box>
       </Modal>
         </div>

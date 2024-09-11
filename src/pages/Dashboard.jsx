@@ -66,7 +66,6 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="w-[100%] lg:w-[32%] md:w-[32%]">
-          <CreateContract />
         </div>
       </section>
       <Box sx={{ width: "100%" }}>

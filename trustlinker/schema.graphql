@@ -1,0 +1,21 @@
+type AgreementCreated @entity(immutable: true) {
+  id: Bytes!
+  _id: BigInt! # uint256
+  _agreement: String! # string
+  partyA: Bytes! # address
+  partyB: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type partyBSigned @entity(immutable: true) {
+  id: Bytes!
+  _id: BigInt! # uint256
+  _agreement: String! # string
+  partyA: Bytes! # address
+  partyB: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

@@ -1,0 +1,29 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: TrustLinker
+    network: optimism-sepolia
+    source:
+      address: "0x6e32b9C4C32CB6b9bf7D7C46897343e650d995e8"
+      abi: TrustLinker
+      startBlock: 17115281
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AgreementCreated
+        - partyBSigned
+      abis:
+        - name: TrustLinker
+          file: ./abis/TrustLinker.json
+      eventHandlers:
+        - event: AgreementCreated(uint256,string,address,address)
+          handler: handleAgreementCreated
+        - event: partyBSigned(uint256,string,address,address)
+          handler: handlepartyBSigned
+      file: ./src/trust-linker.ts
