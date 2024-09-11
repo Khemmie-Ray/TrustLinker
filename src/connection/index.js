@@ -5,20 +5,20 @@ export const SUPPORTED_CHAIN = 11155420;
 export const isSupportedChain = (chainId) =>
   Number(chainId) === SUPPORTED_CHAIN;
 
-const LiskSepolia = {
-  chainId: 4202,
-  name: 'lisk',
-  currency: 'ETH',
-  explorerUrl: 'https://sepolia-blockscout.lisk.com',
-  rpcUrl: import.meta.env.VITE_INFURA_RPC
-}
+// const LiskSepolia = {
+//   chainId: 4202,
+//   name: 'lisk',
+//   currency: 'ETH',
+//   explorerUrl: 'https://sepolia-blockscout.lisk.com',
+//   rpcUrl: import.meta.env.VITE_INFURA_RPC
+// }
 
 const OptimismSepolia = {
   chainId: 11155420,
   name: 'OP Sepolia',
   currency: 'ETH',
   explorerUrl: 'https://optimism-sepolia.blockscout.com',
-  rpcUrl: import.meta.env.VITE_INFURA_RPC
+  rpcUrl: import.meta.env.VITE_rpc_url
 }
 
 const metadata = {
@@ -31,7 +31,7 @@ const metadata = {
 export const configWeb3Modal = () => createWeb3Modal({
   ethersConfig: defaultConfig({ metadata }),
   chains: [OptimismSepolia],
-  projectId: import.meta.env.VITE_projectId,
+  projectId: import.meta.env.VITE_PROJECT_ID,
   enableAnalytics: false,
   themeVariables: {
     '--w3m-accent': '#222BAE',

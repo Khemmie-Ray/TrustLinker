@@ -107,7 +107,7 @@ function CreateAgreement() {
 
   return (
     <div className='flex flex-col px-5 gap-y-4 border'>
-        <h4 className='font-bold text-[25px]'>Create-Contract</h4>
+        <h4 className='font-bold text-[28px]'>Create-Contract</h4>
 
         <div className='flex flex-col w-6/12 gap-y-8 m-auto border border-blue-400 p-8'>
             <div className='flex flex-col gap-y-2'>

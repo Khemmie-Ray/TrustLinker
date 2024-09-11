@@ -13,7 +13,7 @@ const Home = () => {
     <div>
       <Header />
       <main className=" w-[90%] mx-auto">
-        <section className="flex justify-between my-16">
+        <section className="flex justify-between my-16 flex-col lg:flex-row md:flex-row">
           <h1 className="w-[100%] lg:w-[60%] md:w-[60%] text-[28px] lg:text-[58px] md:text-[58px] font-[700]">
             <span className="text-[#222BAE]">TrustLinker</span> – Decentralized
             On-Chain Contract Signing.
@@ -32,10 +32,10 @@ const Home = () => {
           <div className="w-[100%] lg:w-[70%] md:w-[70%]">
             <img src={bgImg} alt="" className="w-[100%]"/>
             <div className="flex justify-between mt-6 flex-col lg:flex-row md:flex-row">
-            <div className="bg-[#222BAE] text-white rounded-2xl p-8 w-[100%] lg:w-[70%] md:w-[70%]">
+            <div className="bg-[#222BAE] text-white rounded-2xl p-8 w-[100%] lg:w-[70%] md:w-[70%] mb-4">
                 <p>TrustLinker: is a decentralized on-chain contract signing platform that ensures secure, transparent, and immutable agreements. By leveraging blockchain technology and AI-powered contract drafting, TrustLinker simplifies the creation, signing, and management of contracts, providing a trusted environment for individuals and businesses alike.</p>
             </div>
-            <div className="w-[100%] lg:w-[28%] md:w-[28%] border border-[#222BAE] rounded-2xl p-8 flex justify-center items-center flex-col text-center">
+            <div className="w-[100%] lg:w-[28%] md:w-[28%] border border-[#222BAE] rounded-2xl p-8 flex justify-center items-center flex-col text-center mb-4">
               <h2 className="text-[28px] lg:text-[58px] md:text-[58px] font-[700]">80%</h2>
               <p className="font-[500]">Human errors fixed with smart contracts and AI</p>
             </div>
@@ -45,14 +45,14 @@ const Home = () => {
           <img src={bgImg2} alt="" className="w-[100%]" />
           </div>
         </section>
-        <section className="flex justify-between my-20">
+        <section className="flex justify-between my-20 flex-col lg:flex-row md:flex-row">
             <div className="w-[100%] lg:w-[40%] md:w-[40%] self-center">
                 <h2 className="text-[24px] lg:text-[48px] md:text-[48px] font-[700] mb-8">How it Works</h2>
                 <ul>
-                    <li className="mb-4"><strong>Connect Your Wallet</strong>: Securely link your wallet to verify your identity.</li>
-                    <li className="mb-4"><strong>Create Your Contract</strong>: Leverage AI to draft your contract directly on the platform or upload an existing one. The AI tool helps you customize the contract with signer details, clauses, and other key information tailored to your needs.</li>
-                    <li className="mb-4"><strong>Invite Signers</strong>: Easily invite others to sign the contract by sharing a secure link. Each signer verifies their identity through their blockchain wallet for transparent, tamper-proof authentication.</li>
-                    <li className="mb-4"><strong>Sign and Record</strong>: Once all parties sign, the contract is securely recorded on the blockchain, ensuring it’s immutable and accessible at any time. This can also be minted as an NFT.</li>
+                    <li className="mb-4 list-disc"><strong>Connect Your Wallet</strong>: Securely link your wallet to verify your identity.</li>
+                    <li className="mb-4 list-disc"><strong>Create Your Contract</strong>: Leverage AI to draft your contract directly on the platform or upload an existing one. The AI tool helps you customize the contract with signer details, clauses, and other key information tailored to your needs.</li>
+                    <li className="mb-4 list-disc"><strong>Invite Signers</strong>: Easily invite others to sign the contract by sharing a secure link. Each signer verifies their identity through their blockchain wallet for transparent, tamper-proof authentication.</li>
+                    <li className="mb-4 list-disc"><strong>Sign and Record</strong>: Once all parties sign, the contract is securely recorded on the blockchain, ensuring it’s immutable and accessible at any time. This can also be minted as an NFT.</li>
                 </ul>
             </div>
             <div className="w-[100%] lg:w-[55%] md:w-[55%] flex justify-between">

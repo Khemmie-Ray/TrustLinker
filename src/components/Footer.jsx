@@ -8,7 +8,7 @@ import logo from '../assets/logo.svg'
 const Footer = () => {
   return (
     <footer>
-      <div className="flex justify-between items-start border-t-2 border-[#dadada] w-[90%] mx-auto py-12">
+      <div className="flex flex-col lg:flex-row md:flex-row justify-between items-start border-t-2 border-[#dadada] w-[90%] mx-auto py-12">
         <div className="w-[100%] lg:w-[30%] md:w-[30%]">
           <img src={logo} alt="" className='w-[180px] mb-8' />
           <p>
@@ -16,7 +16,7 @@ const Footer = () => {
             AI Power.
           </p>
         </div>
-        <div className="w-[100%] lg:w-[15%] md:w-[15%]">
+        <div className="w-[100%] lg:w-[15%] md:w-[15%] mb-4">
           <p className="font-[700] mb-4">Follow Us</p>
           <div className="flex justify-between text-3xl text-[#222BAE]">
             <FaLinkedin />
@@ -25,12 +25,12 @@ const Footer = () => {
             <FaSquareXTwitter />
           </div>
           </div>
-          <div className="w-[100%] lg:w-[15%] md:w-[15%] text-right">
+          <div className="w-[100%] lg:w-[15%] md:w-[15%] lg:text-right md:text-right text-center">
             <p className="mb-4">Policy</p>
             <p className="mb-4">View Contracts</p>
             <p className="mb-4">Terms & Conditions</p>
           </div>
-          <div className="w-[100%] lg:w-[15%] md:w-[15%] text-right">
+          <div className="w-[100%] lg:w-[15%] md:w-[15%] lg:text-right md:text-right text-center">
             <p className="mb-4">Home</p>
             <p className="mb-4">About</p>
             <p className="mb-4">Getting Started</p>

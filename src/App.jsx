@@ -19,8 +19,7 @@ const router = createBrowserRouter(
       <Route path="/dashboard" element={<DashboardLayout />}>
       <Route index element={<Dashboard/>} />
       <Route path="create-event" element={<CreateAgreement/>}/>
-      </Route>
-        
+      </Route>      
     </Route>
   )
 );

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import CreateContract from "../components/CreateContract";
 import { Box, Tabs, Tab } from "@mui/material";
 import PropTypes from 'prop-types';
+import { FaCircleCheck } from "react-icons/fa6";
 
 const Dashboard = () => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setDay(newValue);
   };
 
   function CustomTabPanel(props) {
@@ -45,7 +44,7 @@ const Dashboard = () => {
         Dashboard
       </h2>
       <section className="flex justify-between items-center mb-16">
-        <div className="bg-white rounded-2xl w-[100%] lg:w-[65%] md:w-[65%] flex justify-between">
+        <div className="bg-white rounded-2xl w-[100%]  flex justify-between">
           <div className="p-6 flex flex-col items-center justify-center border-r-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
               20
@@ -64,8 +63,6 @@ const Dashboard = () => {
             </h2>
             <p>Created Contracts</p>
           </div>
-        </div>
-        <div className="w-[100%] lg:w-[32%] md:w-[32%]">
         </div>
       </section>
       <Box sx={{ width: "100%" }}>
@@ -105,14 +102,20 @@ const Dashboard = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <div >
-              NFT
+          <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
+          <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil expedita sunt sequi tenetur temporibus inventore consectetur distinctio, hic aut labore!</p>
+              <div className="absolute top-5 right-5"><FaCircleCheck className="text-[#222BAE] text-4xl"/></div>
           </div>
+          </section>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <div>
-            Yet to sign
+        <section className="flex flex-wrap justify-between lg:flex-row md:flex-row flex-col">
+          <div className="bg-white rounded-lg p-6 w-[100%] lg:w-[32%] md:w-[32%] mb-4 relative">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil expedita sunt sequi tenetur temporibus inventore consectetur distinctio, hic aut labore!</p>
+              <button className="text-white bg-[#222BAE] px-4 py-2 rounded-lg font-bold text-[16px] w-[100%] my-2 hover:bg-[#5a60b3] hover:text-white hover:font-bold mt-6 m">Sign Contract</button>
           </div>
+          </section>
         </CustomTabPanel>
       </Box>
     </main>
