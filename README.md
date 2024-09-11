@@ -36,3 +36,7 @@ Trustlinker integrates Web3.js and an AI-driven contract generator powered by th
 - Sign the Agreement: Each party signs the contract using their blockchain wallet (private keys).
 - Blockchain Storage: The contract is stored immutably on-chain, guaranteeing no further modifications can be made.
 - Enforcement: Trustlinker ensures that the terms of the contract are upheld, with any breaches recorded on the blockchain.
+
+### contractAddress: 0x53700f45Eb399e9E2640CC06899DdB41CDB94A89
+### chain: optimisim sepolia
+### blockexplorer: https://optimism-sepolia.blockscout.com/address/0x53700f45Eb399e9E2640CC06899DdB41CDB94A89
