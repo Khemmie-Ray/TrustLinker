@@ -43,15 +43,15 @@ const Dashboard = () => {
       <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700] my-6">
         Dashboard
       </h2>
-      <section className="flex justify-between items-center mb-16">
-        <div className="bg-white rounded-2xl w-[100%]  flex justify-between">
-          <div className="p-6 flex flex-col items-center justify-center border-r-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
+      <section className="mb-16">
+        <div className="bg-white rounded-2xl w-[100%] flex-col lg:flex-row md:flex-row  flex justify-between">
+          <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
               20
             </h2>
             <p>Onchain Contracts</p>
           </div>
-          <div className="p-6 flex flex-col items-center justify-center border-r-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
+          <div className="p-6 flex flex-col items-center justify-center lg:border-r-2 md:border-r-2 border-b-2 border-[#222BAE] w-[100%] lg:w-[32%] md:w-[32%] text-center">
             <h2 className="text-[28px] lg:text-[48px] md:text-[48px] font-[700]">
               20
             </h2>
