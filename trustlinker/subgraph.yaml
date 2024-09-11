@@ -8,9 +8,9 @@ dataSources:
     name: TrustLinker
     network: optimism-sepolia
     source:
-      address: "0x6e32b9C4C32CB6b9bf7D7C46897343e650d995e8"
+      address: "0x53700f45Eb399e9E2640CC06899DdB41CDB94A89"
       abi: TrustLinker
-      startBlock: 17115281
+      startBlock: 17114538
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -22,8 +22,8 @@ dataSources:
         - name: TrustLinker
           file: ./abis/TrustLinker.json
       eventHandlers:
-        - event: AgreementCreated(uint256,string,address,address)
+        - event: AgreementCreated(string,address,address)
           handler: handleAgreementCreated
-        - event: partyBSigned(uint256,string,address,address)
+        - event: partyBSigned(string,address,address)
           handler: handlepartyBSigned
       file: ./src/trust-linker.ts

@@ -8,7 +8,6 @@ export function handleAgreementCreated(event: AgreementCreatedEvent): void {
   let entity = new AgreementCreated(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._id = event.params._id
   entity._agreement = event.params._agreement
   entity.partyA = event.params.partyA
   entity.partyB = event.params.partyB
@@ -24,7 +23,6 @@ export function handlepartyBSigned(event: partyBSignedEvent): void {
   let entity = new partyBSigned(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._id = event.params._id
   entity._agreement = event.params._agreement
   entity.partyA = event.params.partyA
   entity.partyB = event.params.partyB

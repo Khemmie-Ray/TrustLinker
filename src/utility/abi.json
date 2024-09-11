@@ -4,12 +4,6 @@
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
 				"internalType": "string",
 				"name": "_agreement",
 				"type": "string"
@@ -31,14 +25,26 @@
 		"type": "event"
 	},
 	{
-		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "_agreement",
+				"type": "string"
 			},
+			{
+				"internalType": "address",
+				"name": "_partyB",
+				"type": "address"
+			}
+		],
+		"name": "createAgreement",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
 			{
 				"indexed": false,
 				"internalType": "string",
@@ -60,6 +66,19 @@
 		],
 		"name": "partyBSigned",
 		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_agreementId",
+				"type": "uint256"
+			}
+		],
+		"name": "signAgreementPartyB",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [],
@@ -116,37 +135,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_agreement",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "_partyB",
-				"type": "address"
-			}
-		],
-		"name": "createAgreement",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_agreementId",
-				"type": "uint256"
-			}
-		],
-		"name": "signAgreementPartyB",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]

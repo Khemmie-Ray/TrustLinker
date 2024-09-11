@@ -1,12 +1,11 @@
 import { newMockEvent } from "matchstick-as"
-import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts"
+import { ethereum, Address } from "@graphprotocol/graph-ts"
 import {
   AgreementCreated,
   partyBSigned
 } from "../generated/TrustLinker/TrustLinker"
 
 export function createAgreementCreatedEvent(
-  _id: BigInt,
   _agreement: string,
   partyA: Address,
   partyB: Address
@@ -15,9 +14,6 @@ export function createAgreementCreatedEvent(
 
   agreementCreatedEvent.parameters = new Array()
 
-  agreementCreatedEvent.parameters.push(
-    new ethereum.EventParam("_id", ethereum.Value.fromUnsignedBigInt(_id))
-  )
   agreementCreatedEvent.parameters.push(
     new ethereum.EventParam("_agreement", ethereum.Value.fromString(_agreement))
   )
@@ -32,7 +28,6 @@ export function createAgreementCreatedEvent(
 }
 
 export function createpartyBSignedEvent(
-  _id: BigInt,
   _agreement: string,
   partyA: Address,
   partyB: Address
@@ -41,9 +36,6 @@ export function createpartyBSignedEvent(
 
   partyBSignedEvent.parameters = new Array()
 
-  partyBSignedEvent.parameters.push(
-    new ethereum.EventParam("_id", ethereum.Value.fromUnsignedBigInt(_id))
-  )
   partyBSignedEvent.parameters.push(
     new ethereum.EventParam("_agreement", ethereum.Value.fromString(_agreement))
   )
